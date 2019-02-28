@@ -11,9 +11,6 @@ class Tariff24h extends A_CarSharing
   protected $_tData = [];
   protected $_tOption = [];
 
-  /*use GpsTrait;
-  use AddDriverTrait;*/
-
   public function __construct($data = [], $options = [])
   {
     parent::__construct($data, $options);

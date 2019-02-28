@@ -10,28 +10,10 @@ class TariffBase extends A_CarSharing
 
   protected $_tData = [];
   protected $_tOption = [];
-  
-  /*use GpsTrait;
-  use AddDriverTrait;*/
 
   public function __construct($data = [], $options = [])
   {
-
     parent::__construct($data, $options);
-    /*$this->_tData = $data;  
-
-    if (
-      isset($options['option']) && 
-      in_array($options['option'], ['gps', 'addDriver'])
-    ) {
-      if ($options['option'] == 'gps') {
-        $this->_tOption = new GpsTraite();
-      } 
-      else if ($options['option'] == 'addDriver') {
-        $this->_tOption = new AddDriverTraite();
-      }
-    }*/ 
-
   }
 
   public function calcPrice() 

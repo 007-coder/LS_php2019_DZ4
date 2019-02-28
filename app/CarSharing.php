@@ -22,6 +22,7 @@ class CarSharing extends A_CarSharing
   {
     $this->tariffName = (in_array($tariff, ['base','1h','24h','student'])) ? ucfirst($tariff) : 'Base';  
     $tStr = 'Tariff' . $this->tariffName;
+    
     require_once(APP_DIR . DS . $tStr . '.php');
 
     if (isset($data['driverAge'])) {

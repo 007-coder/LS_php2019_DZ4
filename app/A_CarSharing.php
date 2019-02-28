@@ -30,6 +30,7 @@ abstract class A_CarSharing implements I_CarSharing
     }
 
   }
+  
 
   public abstract function calcPrice();  
 }
