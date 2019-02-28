@@ -2,7 +2,7 @@
 /**
 * interface CarSharing
 */
-interface I_CarSharing
+interface CarSharingInterface
 {  
   
   // Не знаю что сюда писать поэтому пустой интерфейс

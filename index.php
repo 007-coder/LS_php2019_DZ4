@@ -9,31 +9,35 @@ require_once(APP_DIR.DS.'CarSharing.php');
 
 /*
 Нужно доделать расчет с учетом трейтов. Реализовать трейты во всей их красе, короче. 
-
-// пример для $travel['data']
-$travel['data'] = [
-  'distance' => 5, // Расстояние в км.
-  'time' => '5:H', // :m - минуты, :H - часы, :HH - Сутки,
-  'driverAge' => 20, // Возраст водителя   
-];
 */
 
+
 $travel = [
-  'tariff' =>'student', // Тариф base | 1h | 24h | student 
-  'data' => [
-    'distance' => 5,
-    'time' => '24:H',
-    'driverAge'=> 20
-  ],
-  'options' => [
-    'option' => 'gps' // gps | addDriver
-  ]
+  // Тариф base | hourly | dayly | student 
+  'tariff' =>'student',
+  'distance' => 5,
+  'travelTime' => '24:H',
+  'driverAge'=> 22,
+  // '' | gps | addDriver
+  'option' => [
+    'name' => 'addDriver',
+    'time' => '1:H'
+  ]  
 ];
-$carSharing = new CarSharing($travel['tariff'], $travel['data'], $travel['options']); 
+
+$carSharing = new CarSharing(
+  $travel['tariff'], 
+  $travel['distance'], 
+  $travel['travelTime'], 
+  $travel['driverAge'], 
+  $travel['option']
+); 
 
 wrap_pre($carSharing->getTariffInfo());
 
 echo $carSharing->calcPrice();
+
+
 
 
 

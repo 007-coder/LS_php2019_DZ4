@@ -3,36 +3,39 @@
 /**
 * 
 */
-class TariffStudent extends A_CarSharing
+class TariffStudent extends CarSharingAbstract
 {
   const PRICE_PER_MINUTE = 1;
-  const PRICE_PER_KM = 4;
+  const PRICE_PER_KM = 4; 
 
-  protected $_tData = [];
-  protected $_tOption = [];
-
-
-  public function __construct($data = [], $options = [])
+  public function __construct($tariff, $distance, $travelTime, $driverAge, $option = [], $youthCoef)
   {
-    parent::__construct($data, $options);    
+    parent::__construct(
+      $tariff, $distance, $travelTime, 
+      $driverAge, $option, $youthCoef
+    );    
   }  
 
   public function calcPrice() 
   {
-    if ($this->_tData['driverAge'] > 25) {
+    if ($this->driverAge > 25) {
       return 'Возраст водителя больше 25! Не могу использовать данный тариф! 
       Выбирите другой тариф.<br>';
     } else {
 
-      $time = explode(':', $this->_tData['time']);
-      $timeVal = ($time[1] == 'm') ? $time[0] :  timeConvert($this->_tData['time'], 'm');
+      $time = explode(':', $this->travelTime);
+    $timeVal = ($time[1] == 'm') ? $time[0] : timeConvert($this->travelTime, 'm');
 
-      $calcDistance = $this->_tData['distance']*self::PRICE_PER_KM;
-      $calcTime = $timeVal*self::PRICE_PER_MINUTE;
+    $calcOption = [];  
+    wrap_pre($this->getGpsStatus(), '$this->getGpsStatus() in "student" tarif');  
+    wrap_pre($this->getAddDriverStatus(), '$this->getAddDriverStatus() in "student" tarif');
 
-      // Дописать с учетом трейтов
-      return ($calcDistance + $calcTime) * $this->_tData['youthCoef']
-             . ' ' . $this->_tData['currencyStr'];
+    $calcDistance = $this->distance*self::PRICE_PER_KM;
+    $calcTime = $timeVal*self::PRICE_PER_MINUTE;
+
+    // Дописать с учетом трейтов
+    return ($calcDistance + $calcTime) * $this->youthCoef
+           . ' ' . $this->currencyStr;
 
     }
   }
