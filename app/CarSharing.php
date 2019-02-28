@@ -10,13 +10,14 @@ class CarSharing extends A_CarSharing
   protected $tariffObj = null;
   protected $tariffName = '';
 
-  // Дополнит. наценка в зависимости от возраста водителя 0.1 = 10%
-  protected $YangCoef = 1;
+  // Дополнит. коэф в зависимости от возраста водителя 1.1 = +10%
+  protected $youthCoef = 1;
   protected $driverAge = 0;
 
   const DRIVER_MIN_AGE = 18;
   const DRIVER_MAX_AGE = 65;
-  
+
+
   public function __construct($tariff, $data = [], $options = []) 
   {
     $this->tariffName = (in_array($tariff, ['base','1h','24h','student'])) ? ucfirst($tariff) : 'Base';  
@@ -30,14 +31,14 @@ class CarSharing extends A_CarSharing
         $data['driverAge'] = self::DRIVER_MIN_AGE;
       } 
       if ($data['driverAge'] >= 18 && $data['driverAge'] <= 21) {
-        $this->YangCoef = 1.1;
+        $this->youthCoef = 1.1;
       } 
 
       $this->driverAge = $data['driverAge'];
     } 
 
     $addDataForTariff = [
-      'tax' => $this->YangCoef,
+      'youthCoef' => $this->youthCoef,
       'currencyStr' => 'руб.' 
     ];
 
@@ -51,14 +52,14 @@ class CarSharing extends A_CarSharing
 
   public function calcPrice() 
   {
-
+    return $this->tariffObj->calcPrice();
   }
 
   public function getTariffInfo() 
   {
     return [
       'name' => $this->tariffName,
-      'tax' => $this->YangCoef,
+      'youthCoef' => $this->youthCoef,
       'driverAge' => $this->driverAge,
     ];
     
