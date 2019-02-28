@@ -9,13 +9,14 @@ class Tariff24h extends A_CarSharing
   const PRICE_PER_KM = 1;
 
   protected $_tData = [];
-  protected $_tOptions = [];
+  protected $_tOption = [];
+
+  /*use GpsTrait;
+  use AddDriverTrait;*/
 
   public function __construct($data = [], $options = [])
-  {    
-    $this->_tData = $data;
-    $this->_tOptions = $options;    
-
+  {
+    parent::__construct($data, $options);
   }  
 
   public function calcPrice() 

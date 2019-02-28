@@ -7,7 +7,7 @@ require_once(APP_DIR.DS.'A_CarSharing.php');
 
 class CarSharing extends A_CarSharing
 {
-  protected $tariffObj = null;
+  protected $tariffObj = null;  
   protected $tariffName = '';
 
   // Дополнит. коэф в зависимости от возраста водителя 1.1 = +10%
@@ -33,19 +33,13 @@ class CarSharing extends A_CarSharing
       if ($data['driverAge'] >= 18 && $data['driverAge'] <= 21) {
         $this->youthCoef = 1.1;
       } 
-
       $this->driverAge = $data['driverAge'];
-    } 
+    }
 
-    $addDataForTariff = [
-      'youthCoef' => $this->youthCoef,
-      'currencyStr' => 'руб.' 
-    ];
+    $data['youthCoef'] = $this->youthCoef;
+    $data['currencyStr'] = 'руб';        
 
-    $this->tariffObj = new $tStr(
-      array_merge($data, $addDataForTariff),
-      $options
-    );
+    $this->tariffObj = new $tStr($data, $options);
 
    
   }

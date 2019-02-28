@@ -9,13 +9,29 @@ class TariffBase extends A_CarSharing
   const PRICE_PER_KM = 10;
 
   protected $_tData = [];
-  protected $_tOptions = [];
+  protected $_tOption = [];
   
+  /*use GpsTrait;
+  use AddDriverTrait;*/
 
   public function __construct($data = [], $options = [])
   {
-    $this->_tData = $data;
-    $this->_tOptions = $options;
+
+    parent::__construct($data, $options);
+    /*$this->_tData = $data;  
+
+    if (
+      isset($options['option']) && 
+      in_array($options['option'], ['gps', 'addDriver'])
+    ) {
+      if ($options['option'] == 'gps') {
+        $this->_tOption = new GpsTraite();
+      } 
+      else if ($options['option'] == 'addDriver') {
+        $this->_tOption = new AddDriverTraite();
+      }
+    }*/ 
+
   }
 
   public function calcPrice() 

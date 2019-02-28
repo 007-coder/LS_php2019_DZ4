@@ -25,7 +25,9 @@ $travel = [
     'time' => '24:H',
     'driverAge'=> 20
   ],
-  'options' => []
+  'options' => [
+    'option' => 'gps' // gps | addDriver
+  ]
 ];
 $carSharing = new CarSharing($travel['tariff'], $travel['data'], $travel['options']); 
 
