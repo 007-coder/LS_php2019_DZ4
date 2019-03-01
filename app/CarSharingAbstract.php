@@ -16,15 +16,15 @@ abstract class CarSharingAbstract implements CarSharingInterface
   protected $distance = 0;
   protected $travelTime = 0;  
   protected $driverAge = 0;  
+
   protected $option = ''; 
+  protected $optionsRates = []; 
 
   protected $tariffObj = null;
   protected $tariffName = '';
   // Дополнит. коэф в зависимости от возраста водителя 1.1 = +10%   
   protected $youthCoef = 1;  
-  protected $currencyStr = 'руб';  
-  protected $optionsRates = [];  
-  protected $optionAddPrice = 0;  
+  protected $currencyStr = 'руб'; 
 
 
   public function __construct($tariff, $distance, $travelTime, $driverAge, $option = [], $youthCoef = 1)
@@ -51,5 +51,5 @@ abstract class CarSharingAbstract implements CarSharingInterface
 
   }
 
-  public abstract function calcPrice();  
+  public abstract function calcPrice();
 }

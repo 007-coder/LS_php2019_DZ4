@@ -7,21 +7,15 @@ define('APP_DIR', BASE_DIR.DS.'app');
 require_once(APP_DIR.DS.'functions.php');
 require_once(APP_DIR.DS.'CarSharing.php');
 
-/*
-Нужно доделать расчет с учетом трейтов. Реализовать трейты во всей их красе, короче. 
-*/
 
-
-$travel = [
-  // Тариф base | hourly | dayly | student 
-  'tariff' =>'student',
+$travel = [  
+  'tariff' =>'base', // Тариф base | hourly | dayly | student 
   'distance' => 5,
-  'travelTime' => '24:H',
-  'driverAge'=> 22,
-  // '' | gps | addDriver
+  'travelTime' => '1:H', // ' m - minuts | H - hours | HH - days'
+  'driverAge'=> 22,  
   'option' => [
-    'name' => 'addDriver',
-    'time' => '1:H'
+    'name' => 'gps', // '' | gps | addDriver
+    'time' => '1.5:H'
   ]  
 ];
 

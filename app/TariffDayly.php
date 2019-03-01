@@ -5,7 +5,7 @@
 */
 class TariffDayly extends CarSharingAbstract
 {
-  const PRICE_PER_MINUTE = 0.6944;
+  const PRICE_PER_MINUTE = 0.694444444444;
   const PRICE_PER_KM = 1; 
 
   public function __construct($tariff, $distance, $travelTime, $driverAge, $option = [], $youthCoef)
@@ -29,17 +29,39 @@ class TariffDayly extends CarSharingAbstract
       $timeVal = $timeVal + (1440 - ($timeVal % 1440));
     }
 
-    /*wrap_pre($timeVal, '$timeVal after');*/
+    /* -------------Расчтет цены в зависимости от доп. опций */
+    /* -------------Старт ---------------------------------- */
+    $calcOption = [
+      'gps'=> 0,
+      'addDriver'=> 0
+    ];        
 
-    $calcOption = [];  
-    wrap_pre($this->getGpsStatus(), '$this->getGpsStatus() in "dayly" tarif');  
-    wrap_pre($this->getAddDriverStatus(), '$this->getAddDriverStatus() in "dayly" tarif');
+    if ($this->getGpsStatus()) {        
+      $timeGps = explode(':', $this->option['time']);    
+      $timeGpsVal = ($timeGps[1] == 'm') ? $timeGps[0] : timeConvert($this->option['time'], 'm');
+
+      if (($timeGpsVal < 60) && ($timeGpsVal % 60 !== 0)) {
+        $timeGpsVal = 60;
+      }       
+      if ($timeGpsVal > 60 && ($timeGpsVal % 60 > 1)) {
+        $timeGpsVal = $timeGpsVal + (60 - $timeGpsVal % 60);
+      }   
+
+      $calcOption['gps'] = $timeGpsVal * $this->optionsRates['gps']['pricePerMinute'];  
+    }    
+
+    if ($this->getAddDriverStatus()) {
+      $calcOption['addDriver'] = $this->optionsRates['addDriver']['oneTimePrice'];      
+    }
+    /* ----------------------------------------*/
 
     $calcDistance = $this->distance*self::PRICE_PER_KM;
     $calcTime = $timeVal*self::PRICE_PER_MINUTE;
 
-    // Дописать с учетом трейтов
-    return ($calcDistance + $calcTime) * $this->youthCoef
+    /*wrap_pre($calcDistance . '+'. $calcTime . ' | '.$this->youthCoef, '$calcDistance + $calcTime | $this->youthCoef in "Dayly"');    
+    wrap_pre($calcOption, '$$calcOption in "Dayly"');*/
+    
+    return ($calcDistance + $calcTime + $calcOption['gps'] + $calcOption['addDriver']) * $this->youthCoef
            . ' ' . $this->currencyStr;
   }
   

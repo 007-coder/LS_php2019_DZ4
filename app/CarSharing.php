@@ -28,7 +28,12 @@ class CarSharing extends CarSharingAbstract
       } 
 
       $this->driverAge = $driverAge;
-    }              
+    }    
+
+    parent::__construct(
+      $tariff, $distance, $travelTime, 
+      $driverAge, $option, $this->youthCoef
+    );          
 
     $this->tariffObj = new $tStr($tariff, $distance, $travelTime, $driverAge, $option, $this->youthCoef);
    
@@ -42,9 +47,12 @@ class CarSharing extends CarSharingAbstract
   public function getTariffInfo() 
   {
     return [
-      'name' => $this->tariffName,
+      'tariff' => $this->tariffName,
+      'distance' =>$this->distance,
+      'travelTime' =>$this->travelTime,
+      'driverAge' =>$this->driverAge,
       'youthCoef' => $this->youthCoef,
-      'driverAge' => $this->driverAge,
+      'option' => $this->option
     ];
     
   }
